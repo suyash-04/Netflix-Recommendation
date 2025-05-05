@@ -19,7 +19,7 @@ A Flask-based web application that recommends movies similar to your favorites a
   <img src="screenshots/recommendation.jpeg" alt="Recommendations Page" width="700"/>
   <p><i>Movie recommendations based on user selection</i></p>
   
-  <img src="screenshots/movie_details.jpeg" alt="Movie Details" width="700"/>
+  <img src="screenshots/movie_detail.jpeg" alt="Movie Details" width="700"/>
   <p><i>Detailed information about a selected movie</i></p>
   
   <img src="screenshots/review1.jpeg" alt="Sentiment Analysis" width="700"/>
