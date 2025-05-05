@@ -13,7 +13,7 @@ A Flask-based web application that recommends movies similar to your favorites a
 ## 🖼️ Screenshots
 
 <div align="center">
-  <img src="screenshots/homepage.jped" alt="Homepage" width="700"/>
+  <img src="screenshots/homepage.jpeg" alt="Homepage" width="700"/>
   <p><i>Homepage with Netflix-inspired design</i></p>
   
   <img src="screenshots/recommendation.jpeg" alt="Recommendations Page" width="700"/>
