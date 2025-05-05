@@ -14,16 +14,29 @@ A Flask-based web application that recommends movies similar to your favorites a
 
 <div align="center">
   <img src="screenshots/homepage.jpeg" alt="Homepage" width="700"/>
+  <br>
+  <br>
   <p><i>Homepage with Netflix-inspired design</i></p>
-  
+  <br>
+  <br>
   <img src="screenshots/recommendation.jpeg" alt="Recommendations Page" width="700"/>
+  <br>
+  <br>
   <p><i>Movie recommendations based on user selection</i></p>
-  
+  <br>
+  <br>
   <img src="screenshots/movie_detail.jpeg" alt="Movie Details" width="700"/>
+  <br>
+  <br>
   <p><i>Detailed information about a selected movie</i></p>
-  
+  <br>
+  <br>
   <img src="screenshots/review1.jpeg" alt="Sentiment Analysis" width="700"/>
+  <br>
+  <br>
    <img src="screenshots/review2.jpeg" alt="Sentiment Analysis" width="700"/>
+   <br>
+  <br>
   <p><i>Sentiment analysis of user reviews</i></p>
 </div>
 
@@ -73,7 +86,7 @@ Netflix-Recommendation/
 
 1. **Clone the repository**:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/suyash-04/Netflix-Recommendation.git
    cd Netflix-Recommendation
    ```
 
