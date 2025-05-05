@@ -182,11 +182,11 @@ main_data.csv
 *.csv
 !example_data.csv
 
-# Model files
-*.pkl
+# Model files - Keeping all .pkl files
+# *.pkl  <-- Removed to keep tracking .pkl files
 *.model
-tranform.pkl
-nlp_model.pkl
+# tranform.pkl  <-- Removed to keep tracking transform.pkl
+# nlp_model.pkl  <-- Removed to keep tracking nlp_model.pkl
 
 # Screenshots directory (except .gitkeep)
 screenshots/*
