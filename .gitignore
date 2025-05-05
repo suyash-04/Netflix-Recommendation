@@ -188,6 +188,3 @@ main_data.csv
 # tranform.pkl  <-- Removed to keep tracking transform.pkl
 # nlp_model.pkl  <-- Removed to keep tracking nlp_model.pkl
 
-# Screenshots directory (except .gitkeep)
-screenshots/*
-!screenshots/.gitkeep
