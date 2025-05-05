@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommendations | Netflix Movie Recommender</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0D0D0D;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            letter-spacing: 0.02em;
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        .navbar-brand {
+            color: #E50914 !important;
+            font-weight: 700;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .page-header {
+            padding: 3rem 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)), url('https://wallpaperaccess.com/full/329633.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            margin-bottom: 3rem;
+        }
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: linear-gradient(to top, #0D0D0D, transparent);
+        }
+        h1.recomm-title {
+            font-weight: 700;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+        .lead {
+            font-size: 1.3rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+        .movie-card {
+            background-color: rgba(20, 20, 20, 0.9);
+            border: none;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 30px;
+            height: 100%;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+        .movie-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(229, 9, 20, 0.3);
+        }
+        .card-title {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+        .card-text {
+            color: #cccccc;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+        .card-text strong {
+            color: #E5E5E5;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+        }
+        .genre-badge {
+            background-color: #E50914;
+            color: white;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            padding: 5px 10px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border-radius: 4px;
+        }
+        .btn-netflix {
+            background-color: #E50914;
+            border-color: #E50914;
+            color: white;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .btn-netflix:hover {
+            background-color: #B81D24;
+            border-color: #B81D24;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(229, 9, 20, 0.4);
+        }
+        .no-results {
+            padding: 100px 0;
+            text-align: center;
+        }
+        .review-form {
+            background-color: rgba(20, 20, 20, 0.9);
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 3rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+        .review-form h3 {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .review-form h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: #E50914;
+        }
+        .form-control {
+            background-color: rgba(30, 30, 30, 0.9);
+            border: 1px solid #444444;
+            color: white;
+            border-radius: 5px;
+            padding: 12px 15px;
+            font-size: 1.1rem;
+        }
+        .form-control:focus {
+            background-color: rgba(40, 40, 40, 0.9);
+            color: white;
+            box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.3);
+            border-color: #E50914;
+        }
+        .form-label {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+        footer {
+            background-color: #000000;
+            padding: 30px 0;
+            color: #757575;
+            font-size: 1rem;
+            margin-top: 3rem;
+        }
+        .not-found-icon {
+            font-size: 5rem;
+            color: #E50914;
+            margin-bottom: 2rem;
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+        .movie-card-container {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">NETFLIX</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">HOME</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1 class="recomm-title">RECOMMENDATIONS FOR "{{ movie_title | upper }}"</h1>
+            <p class="lead">Here are some movies you might enjoy based on your selection.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        {% if no_results %}
+        <div class="no-results">
+            <i class="fas fa-film not-found-icon"></i>
+            <h3 class="text-uppercase font-weight-bold mb-3">No recommendations found</h3>
+            <p class="lead">We couldn't find any recommendations for "{{ movie_title }}".</p>
+            <a href="/" class="btn btn-netflix mt-3">TRY ANOTHER MOVIE</a>
+        </div>
+        {% else %}
+        <div class="row">
+            {% for movie in recommendations %}
+            <div class="col-md-4 col-sm-6 movie-card-container">
+                <div class="movie-card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ movie.movie_title | upper }}</h5>
+                        <p class="card-text"><strong>DIRECTOR:</strong> {{ movie.director_name }}</p>
+                        <p class="card-text"><strong>CAST:</strong> {{ movie.actor_1_name }}, {{ movie.actor_2_name }}, {{ movie.actor_3_name }}</p>
+                        <div class="mb-3">
+                            {% for genre in movie.genres.split(' ') %}
+                            <span class="badge genre-badge">{{ genre }}</span>
+                            {% endfor %}
+                        </div>
+                        <a href="/movie/{{ movie.movie_title.replace(' ', '_') }}" class="btn btn-netflix btn-block">VIEW DETAILS</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="review-form">
+                    <h3>SHARE YOUR THOUGHTS</h3>
+                    <form action="/review" method="post">
+                        <input type="hidden" name="movie_title" value="{{ movie_title }}">
+                        <div class="form-group">
+                            <label for="review" class="form-label">YOUR REVIEW:</label>
+                            <textarea class="form-control" id="review" name="review" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-netflix">SUBMIT REVIEW</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <footer class="text-center">
+        <div class="container">
+            <p>&copy; 2023 NETFLIX MOVIE RECOMMENDER. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html> 

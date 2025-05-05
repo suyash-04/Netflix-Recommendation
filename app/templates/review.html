@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Sentiment | Netflix Movie Recommender</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0D0D0D;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            letter-spacing: 0.02em;
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        .navbar-brand {
+            color: #E50914 !important;
+            font-weight: 700;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .review-header {
+            padding: 5rem 0 2rem 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url('https://wallpaperaccess.com/full/1605477.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            margin-bottom: 3rem;
+        }
+        .review-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(to top, #0D0D0D, transparent);
+        }
+        .sentiment-container {
+            padding: 0;
+        }
+        .sentiment-card {
+            background-color: rgba(20, 20, 20, 0.9);
+            border: none;
+            border-radius: 8px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            margin-bottom: 3rem;
+        }
+        .sentiment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: #E50914;
+        }
+        .sentiment-card h2 {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 2.5rem;
+            font-size: 2.2rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        .sentiment-card h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background-color: #E50914;
+        }
+        .sentiment-positive {
+            color: #28a745;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        .sentiment-negative {
+            color: #dc3545;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        .review-text {
+            background-color: rgba(30, 30, 30, 0.8);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            font-style: italic;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        .review-text::before {
+            content: '\201C';
+            font-size: 4rem;
+            position: absolute;
+            top: -15px;
+            left: 10px;
+            color: rgba(229, 9, 20, 0.2);
+            font-family: serif;
+        }
+        .review-text::after {
+            content: '\201D';
+            font-size: 4rem;
+            position: absolute;
+            bottom: -45px;
+            right: 10px;
+            color: rgba(229, 9, 20, 0.2);
+            font-family: serif;
+        }
+        .btn-netflix {
+            background-color: #E50914;
+            border-color: #E50914;
+            color: white;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 12px 25px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .btn-netflix:hover {
+            background-color: #B81D24;
+            border-color: #B81D24;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(229, 9, 20, 0.4);
+        }
+        .btn-outline-light {
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 12px 25px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .btn-outline-light:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+        }
+        footer {
+            background-color: #000000;
+            padding: 30px 0;
+            color: #757575;
+            font-size: 1rem;
+        }
+        .review-details {
+            margin-top: 3rem;
+        }
+        .review-details h4 {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+        }
+        .sentiment-explanation {
+            margin-top: 2.5rem;
+        }
+        .sentiment-explanation h5 {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .sentiment-explanation p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        .action-btns {
+            margin-top: 3rem;
+        }
+        .sentiment-icon-container {
+            margin-bottom: 1.5rem;
+        }
+        .review-title {
+            font-size: 1.4rem;
+            color: #aaa;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+        .movie-title-highlight {
+            color: #fff;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">NETFLIX</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">HOME</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="review-header">
+        <div class="container text-center">
+            <h1 class="display-4 text-uppercase font-weight-bold">SENTIMENT ANALYSIS</h1>
+        </div>
+    </header>
+
+    <div class="container sentiment-container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="sentiment-card">
+                    <h2>REVIEW SENTIMENT ANALYSIS</h2>
+                    
+                    <div class="text-center sentiment-icon-container">
+                        {% if sentiment == "Positive" %}
+                        <i class="fas fa-thumbs-up sentiment-positive"></i>
+                        <h3 class="text-uppercase font-weight-bold sentiment-positive">POSITIVE REVIEW</h3>
+                        {% else %}
+                        <i class="fas fa-thumbs-down sentiment-negative"></i>
+                        <h3 class="text-uppercase font-weight-bold sentiment-negative">NEGATIVE REVIEW</h3>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="review-details">
+                        <h4 class="review-title">YOUR REVIEW FOR "<span class="movie-title-highlight">{{ movie_title | upper }}</span>":</h4>
+                        <div class="review-text">
+                            {{ review }}
+                        </div>
+                        
+                        <div class="sentiment-explanation">
+                            <h5>WHAT THIS MEANS:</h5>
+                            {% if sentiment == "Positive" %}
+                            <p>Our sentiment analysis model has determined that your review expresses a positive opinion about the movie. This suggests that you likely enjoyed the movie and had a good viewing experience.</p>
+                            {% else %}
+                            <p>Our sentiment analysis model has determined that your review expresses a negative opinion about the movie. This suggests that you might not have enjoyed the movie or had some criticisms about it.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="text-center action-btns">
+                        <form action="/recommend" method="post" class="d-inline">
+                            <input type="hidden" name="movie_title" value="{{ movie_title }}">
+                            <button type="submit" class="btn btn-netflix mr-2">GET MORE RECOMMENDATIONS</button>
+                        </form>
+                        <a href="/" class="btn btn-outline-light ml-2">BACK TO HOME</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center">
+        <div class="container">
+            <p>&copy; 2023 NETFLIX MOVIE RECOMMENDER. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html> 

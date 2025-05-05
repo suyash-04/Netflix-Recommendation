@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if not_found %}MOVIE NOT FOUND{% else %}{{ movie.movie_title | upper }}{% endif %} | Netflix Movie Recommender</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0D0D0D;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            letter-spacing: 0.02em;
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        .navbar-brand {
+            color: #E50914 !important;
+            font-weight: 700;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .movie-detail-container {
+            padding: 0 0 50px 0;
+        }
+        .movie-header {
+            padding: 6rem 0 2rem 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://wallpapercave.com/wp/wp2446960.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            margin-bottom: 3rem;
+        }
+        .movie-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(to top, #0D0D0D, transparent);
+        }
+        .movie-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+        .movie-info {
+            background-color: rgba(20, 20, 20, 0.9);
+            padding: 2.5rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .movie-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: #E50914;
+        }
+        .movie-meta {
+            margin-bottom: 2rem;
+        }
+        .movie-meta h4, .movie-description h4 {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            color: #E5E5E5;
+        }
+        .genre-badge {
+            background-color: #E50914;
+            color: white;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            padding: 8px 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .btn-netflix {
+            background-color: #E50914;
+            border-color: #E50914;
+            color: white;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 12px 25px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .btn-netflix:hover {
+            background-color: #B81D24;
+            border-color: #B81D24;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(229, 9, 20, 0.4);
+        }
+        .btn-outline-light {
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 12px 25px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .btn-outline-light:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+        }
+        .crew-section {
+            background-color: rgba(20, 20, 20, 0.9);
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .crew-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: #E50914;
+        }
+        .crew-section h3 {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        .crew-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: #E50914;
+        }
+        .crew-card {
+            background-color: rgba(30, 30, 30, 0.8);
+            border: none;
+            margin-bottom: 20px;
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .crew-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .crew-card h5 {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        .text-muted {
+            color: #999 !important;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .not-found {
+            padding: 100px 0;
+            text-align: center;
+        }
+        .not-found h2 {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 1.5rem 0;
+            font-size: 2.5rem;
+        }
+        .not-found .lead {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+        .not-found-icon {
+            font-size: 5rem;
+            color: #E50914;
+        }
+        footer {
+            background-color: #000000;
+            padding: 30px 0;
+            color: #757575;
+            font-size: 1rem;
+        }
+        .review-form {
+            background-color: rgba(20, 20, 20, 0.9);
+            padding: 2.5rem;
+            border-radius: 8px;
+            margin-top: 3rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .review-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: #E50914;
+        }
+        .review-form h3 {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        .review-form h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: #E50914;
+        }
+        .form-control {
+            background-color: rgba(30, 30, 30, 0.9);
+            border: 1px solid #444444;
+            color: white;
+            border-radius: 5px;
+            padding: 15px;
+            font-size: 1.1rem;
+        }
+        .form-control:focus {
+            background-color: rgba(40, 40, 40, 0.9);
+            color: white;
+            box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.3);
+            border-color: #E50914;
+        }
+        .form-label {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+        .movie-poster {
+            text-align: center;
+            background-color: rgba(30, 30, 30, 0.5);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .movie-poster:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .movie-icon {
+            font-size: 8rem;
+            color: #444;
+            margin-bottom: 1.5rem;
+        }
+        .director-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">NETFLIX</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">HOME</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="movie-detail-container">
+        {% if not_found %}
+        <div class="not-found">
+            <i class="fas fa-exclamation-triangle not-found-icon"></i>
+            <h2>MOVIE NOT FOUND</h2>
+            <p class="lead">We couldn't find the movie you're looking for.</p>
+            <a href="/" class="btn btn-netflix mt-3">BACK TO HOME</a>
+        </div>
+        {% else %}
+        <header class="movie-header">
+            <div class="container">
+                <h1 class="movie-title">{{ movie.movie_title | upper }}</h1>
+            </div>
+        </header>
+        
+        <div class="container">
+            <div class="movie-info">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="movie-meta">
+                            <h4>GENRES</h4>
+                            <div>
+                                {% for genre in movie.genres.split(' ') %}
+                                <span class="badge genre-badge">{{ genre }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        <div class="movie-description mb-4">
+                            <h4>DIRECTOR</h4>
+                            <p class="director-name">{{ movie.director_name }}</p>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <a href="/" class="btn btn-netflix mr-2">BACK TO HOME</a>
+                            <a href="javascript:history.back()" class="btn btn-outline-light">BACK TO RECOMMENDATIONS</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="movie-poster">
+                            <i class="fas fa-film movie-icon"></i>
+                            <form action="/recommend" method="post" class="mt-3">
+                                <input type="hidden" name="movie_title" value="{{ movie.movie_title }}">
+                                <button type="submit" class="btn btn-netflix btn-block">FIND SIMILAR MOVIES</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="crew-section">
+                <h3>CAST</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="crew-card">
+                            <h5>{{ movie.actor_1_name }}</h5>
+                            <p class="text-muted">MAIN ACTOR</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="crew-card">
+                            <h5>{{ movie.actor_2_name }}</h5>
+                            <p class="text-muted">SUPPORTING ACTOR</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="crew-card">
+                            <h5>{{ movie.actor_3_name }}</h5>
+                            <p class="text-muted">SUPPORTING ACTOR</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="review-form">
+                        <h3>SHARE YOUR THOUGHTS</h3>
+                        <form action="/review" method="post">
+                            <input type="hidden" name="movie_title" value="{{ movie.movie_title }}">
+                            <div class="form-group">
+                                <label for="review" class="form-label">YOUR REVIEW:</label>
+                                <textarea class="form-control" id="review" name="review" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-netflix">SUBMIT REVIEW</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <footer class="text-center mt-5">
+        <div class="container">
+            <p>&copy; 2023 NETFLIX MOVIE RECOMMENDER. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html> 
