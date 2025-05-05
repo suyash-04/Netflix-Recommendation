@@ -13,17 +13,17 @@ A Flask-based web application that recommends movies similar to your favorites a
 ## 🖼️ Screenshots
 
 <div align="center">
-  <img src="screenshots/homepage.png" alt="Homepage" width="700"/>
+  <img src="screenshots/homepage.jped" alt="Homepage" width="700"/>
   <p><i>Homepage with Netflix-inspired design</i></p>
   
-  <img src="screenshots/recommendation.png" alt="Recommendations Page" width="700"/>
+  <img src="screenshots/recommendation.jpeg" alt="Recommendations Page" width="700"/>
   <p><i>Movie recommendations based on user selection</i></p>
   
-  <img src="screenshots/movie_details.png" alt="Movie Details" width="700"/>
+  <img src="screenshots/movie_details.jpeg" alt="Movie Details" width="700"/>
   <p><i>Detailed information about a selected movie</i></p>
   
-  <img src="screenshots/review1.png" alt="Sentiment Analysis" width="700"/>
-   <img src="screenshots/review2.png" alt="Sentiment Analysis" width="700"/>
+  <img src="screenshots/review1.jpeg" alt="Sentiment Analysis" width="700"/>
+   <img src="screenshots/review2.jpeg" alt="Sentiment Analysis" width="700"/>
   <p><i>Sentiment analysis of user reviews</i></p>
 </div>
 
