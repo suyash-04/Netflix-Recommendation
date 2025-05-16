@@ -53,4 +53,4 @@ def test_review_sentiment(client):
         'review': 'Great movie!'
     })
     assert response.status_code == 200
-    assert b'Positive' in response.data
+    assert b'POSITIVE REVIEW' in response.data
