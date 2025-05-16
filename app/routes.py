@@ -18,7 +18,7 @@ def load_resources():
     global movie_data, sentiment_model, vectorizer, cosine_sim
     
     if movie_data is None:
-         csv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'main_data.csv')
+        csv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'main_data.csv')
         movie_data = pd.read_csv(csv_path)
         movie_data['movie_title'] = movie_data['movie_title'].apply(lambda x: x.strip() if isinstance(x, str) else x)
     
