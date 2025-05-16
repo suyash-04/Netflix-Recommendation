@@ -8,7 +8,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from app import app
 
 # Load the movie data
-movie_data = pd.read_csv('../main_data.csv')
+movie_data = pd.read_csv('main_data.csv')
 
 # Clean movie titles for better matching
 movie_data['movie_title'] = movie_data['movie_title'].apply(lambda x: x.strip() if isinstance(x, str) else x)
