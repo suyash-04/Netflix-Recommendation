@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import pandas as pd
 from flask import render_template, request
@@ -17,7 +18,8 @@ def load_resources():
     global movie_data, sentiment_model, vectorizer, cosine_sim
     
     if movie_data is None:
-        movie_data = pd.read_csv('main_data.csv')
+         csv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'main_data.csv')
+        movie_data = pd.read_csv(csv_path)
         movie_data['movie_title'] = movie_data['movie_title'].apply(lambda x: x.strip() if isinstance(x, str) else x)
     
     if sentiment_model is None:
