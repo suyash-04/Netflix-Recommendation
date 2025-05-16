@@ -22,4 +22,5 @@ seaborn
 tmdbv3api
 python-dotenv
 pytest
+
 -e .

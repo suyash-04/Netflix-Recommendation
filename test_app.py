@@ -1,39 +1,56 @@
 import pytest
 from unittest.mock import patch, MagicMock
-from app import create_app
-
+from app.routes import app
 import pandas as pd
 
-# Sample dummy data to return instead of reading main_data.csv
+# Sample dummy movie data
 dummy_movie_data = pd.DataFrame({
-    'title': ['Movie1', 'Movie2'],
-    'genres': ['Action|Thriller', 'Comedy'],
+    'movie_title': ['Movie1', 'Movie2'],
+    'comb': ['action thriller', 'comedy drama'],
+    'director_name': ['Dir1', 'Dir2'],
+    'actor_1_name': ['Actor1', 'Actor2'],
+    'actor_2_name': ['Actor3', 'Actor4'],
+    'actor_3_name': ['Actor5', 'Actor6'],
+    'genres': ['Action|Thriller', 'Comedy']
 })
 
-# Sample dummy pickle model
-dummy_model = MagicMock()
-dummy_model.predict = MagicMock(return_value=['Movie2'])
+# Dummy sentiment model
+dummy_sentiment_model = MagicMock()
+dummy_sentiment_model.predict.return_value = [1]  # Always "Positive"
 
-@pytest.fixture(scope='module')
-def mock_app():
-    # Patch pd.read_csv and pickle.load where they are imported (app.routes)
-    with patch('app.routes.pd.read_csv', return_value=dummy_movie_data) as mock_read_csv, \
-         patch('app.routes.pickle.load', return_value=dummy_model) as mock_pickle_load:
-        app = create_app()
+# Dummy vectorizer
+dummy_vectorizer = MagicMock()
+dummy_vectorizer.transform.return_value = [[0.1, 0.9]]
+
+@pytest.fixture
+def client():
+    with patch('app.routes.pd.read_csv', return_value=dummy_movie_data), \
+         patch('app.routes.pickle.load', side_effect=[dummy_sentiment_model, dummy_vectorizer]), \
+         patch('app.routes.TfidfVectorizer.fit_transform', return_value=[[1, 0.9], [0.9, 1]]), \
+         patch('app.routes.cosine_similarity', return_value=[[1, 0.9], [0.9, 1]]):
+
         app.testing = True
-        yield app
-
-def test_recommend_valid_movie(mock_app):
-    client = mock_app.test_client()
-    response = client.post('/recommend', json={'movie_name': 'Movie1'})
+        with app.test_client() as client:
+            yield client
+def test_home(client):
+    response = client.get('/')
     assert response.status_code == 200
-    data = response.get_json()
-    assert 'recommendations' in data
-    assert 'Movie2' in data['recommendations']
+    assert b'MOVIE1' in response.data
 
-def test_recommend_invalid_movie(mock_app):
-    client = mock_app.test_client()
-    response = client.post('/recommend', json={'movie_name': 'Unknown Movie'})
-    assert response.status_code == 404
-    data = response.get_json()
-    assert data['error'] == 'Movie not found'
+def test_recommend_valid(client):
+    response = client.post('/recommend', data={'movie_title': 'Movie1'})
+    assert response.status_code == 200
+    assert b'Movie2' in response.data
+
+def test_recommend_invalid(client):
+    response = client.post('/recommend', data={'movie_title': 'Unknown'})
+    assert response.status_code == 200
+    assert b'No results' in response.data or b'no recommendations' in response.data.lower()
+
+def test_review_sentiment(client):
+    response = client.post('/review', data={
+        'movie_title': 'Movie1',
+        'review': 'Great movie!'
+    })
+    assert response.status_code == 200
+    assert b'Positive' in response.data
