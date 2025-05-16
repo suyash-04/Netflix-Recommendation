@@ -11,7 +11,7 @@ def print_banner():
     print("  • Movie recommendations based on content similarity")
     print("  • Detailed movie information")
     print("  • Sentiment analysis of reviews")
-    print("\n🔗 Access the application at: http://localhost:5000")
+    print("\n🔗 Access the application at: http://localhost:80")
     print("\n📸 To add screenshots for documentation:")
     print("  1. Navigate to each main page of the application")
     print("  2. Take screenshots and save them in the 'screenshots' folder as:")
