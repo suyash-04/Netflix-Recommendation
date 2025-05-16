@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy container app to Azure Web App - netflixrecommendation
 
 on:
@@ -15,6 +12,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: Download main_data.csv from Google Drive
+      run: |
+        curl -L "https://drive.google.com/uc?export=download&id=1m_L6EIdE6s2YHaic4e7eadRPNP0gtY4b" -o main_data.csv
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
