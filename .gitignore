@@ -178,8 +178,7 @@ artifacts/
 artifacts/*
 
 # Large data files
-main_data.csv
-*.csv
+
 !example_data.csv
 
 # Model files - Keeping all .pkl files

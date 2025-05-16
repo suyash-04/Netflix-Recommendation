@@ -30,7 +30,7 @@ if __name__ == '__main__':
     print_banner()
     
     # Open browser automatically after a short delay
-    url = "http://localhost:5000"
+    url = "http://localhost:80"
     webbrowser.open_new(url)
     
     # Run the Flask application
