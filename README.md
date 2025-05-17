@@ -8,13 +8,50 @@ You can access the live application at: [netflixrecommendation-f2bvgzbka0ghebbb.
 
 ## 📋 Features
 
-- **Movie Search**: Search for movies from an extensive database of popular films
-- **Smart Recommendations**: Get personalized movie recommendations based on content similarity
-- **Movie Details**: Access comprehensive information about movies including director, cast, and genres
-- **Sentiment Analysis**: Submit reviews for movies and receive instant AI-powered sentiment analysis
-- **Netflix-inspired UI**: Enjoy a sleek, responsive dark interface with familiar Netflix aesthetics
-- **Containerized Deployment**: Easily deployable through Docker
-- **CI/CD Pipeline**: Automated deployment to Azure using GitHub Actions
+### Core Features
+- **Movie Search**: 
+  - Comprehensive movie database search
+  - Autocomplete suggestions
+  - Fuzzy matching for better search results
+  - Real-time search results
+
+- **Smart Recommendations**: 
+  - Content-based movie recommendations
+  - Similarity scoring based on multiple features
+  - Personalized suggestion engine
+  - Real-time recommendation updates
+
+- **Movie Details**: 
+  - Comprehensive movie information
+  - Director and cast details
+  - Genre classification
+  - Release year and ratings
+  - Plot summaries
+
+- **Sentiment Analysis**: 
+  - AI-powered review analysis
+  - Real-time sentiment prediction
+  - Positive/negative classification
+  - Confidence scoring
+
+### Technical Features
+- **Netflix-inspired UI**: 
+  - Dark theme interface
+  - Responsive design
+  - Modern aesthetics
+  - Smooth animations
+
+- **Containerized Deployment**: 
+  - Docker containerization
+  - Consistent environment
+  - Easy scaling
+  - Portable deployment
+
+- **CI/CD Pipeline**: 
+  - Automated testing
+  - Continuous deployment
+  - Version control
+  - Automated builds
 
 ## 🖼️ Screenshots
 
